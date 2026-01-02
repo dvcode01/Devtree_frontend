@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
-import ErrorMessage from "../../components/ErrorMessage";
+import type { RegisterForm } from '../../types/index'
+import ErrorMessage from "../../components/ErrorMessage"
 
 function Register() {
-  const initialValues = {
-    name: '',
+  const initialValues: RegisterForm = {
+    nombre: '',
     email: '',
     handle: '',
     password: '',
@@ -14,8 +15,8 @@ function Register() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm({defaultValues: initialValues});
   const password = watch('password');
 
-  const handleRegister = () => {
-    console.log('enviando..');
+  const handleRegister = (data: RegisterForm) => {
+    console.log(data);
   };
 
   return (
@@ -27,16 +28,16 @@ function Register() {
         className="bg-white px-5 py-20 rounded-lg space-y-10 mt-10"
       >
         <div className="grid grid-cols-1 space-y-3">
-            <label htmlFor="name" className="text-2xl text-slate-500">Nombre</label>
+            <label htmlFor="nombre" className="text-2xl text-slate-500">Nombre</label>
             <input
-                id="name"
+                id="nombre"
                 type="text"
                 placeholder="Tu Nombre"
                 className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                {...register('name', {required: 'El nombre es obligatorio'})}
+                {...register('nombre', {required: 'El nombre es obligatorio'})}
             />
 
-            {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+            {errors.nombre && <ErrorMessage>{errors.nombre.message}</ErrorMessage>}
         </div>
         <div className="grid grid-cols-1 space-y-3">
             <label htmlFor="email" className="text-2xl text-slate-500">E-mail</label>
