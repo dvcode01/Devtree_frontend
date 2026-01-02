@@ -12,6 +12,7 @@ function Register() {
   };
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm({defaultValues: initialValues});
+  const password = watch('password');
 
   const handleRegister = () => {
     console.log('enviando..');
@@ -44,7 +45,13 @@ function Register() {
                 type="email"
                 placeholder="Email de Registro"
                 className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                {...register('email', {required: 'El email es obligatorio'})}
+                {...register('email', {
+                  required: 'El email es obligatorio', 
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: "E-mail no válido",
+                  }
+                })}
             />
             {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         </div>
@@ -67,7 +74,13 @@ function Register() {
                 type="password"
                 placeholder="Password de Registro"
                 className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                {...register('password', {required: 'El password es obligatorio'})}
+                {...register('password', {
+                  required: 'El password es obligatorio', 
+                  minLength: {
+                    value: 8,
+                    message: 'El password debe ser mínimo de 8 caracteres'
+                  }
+                })}
             />
 
             {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
@@ -80,7 +93,10 @@ function Register() {
                 type="password"
                 placeholder="Repetir Password"
                 className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                {...register('password_confirmation', {required: 'Repetir password es obligatorio'})}
+                {...register('password_confirmation', {
+                  required: 'Repetir password es obligatorio',
+                  validate: (value) => value === password || 'Los passwords son diferentes'
+                })}
             />
 
             {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>}
