@@ -1,17 +1,30 @@
 import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { isAxiosError } from "axios"
+import api from "../../config/api"
 import ErrorMessage from "../../components/ErrorMessage"
+import type { LoginForm } from "../../types"
 
 function Login() {
-  const initialValues = {
+  const initialValues: LoginForm = {
       email: '',
       password: '',
   };
 
   const { register, handleSubmit, formState: { errors } } = useForm({defaultValues: initialValues});
 
-  const handleLogin = () => {
+  const handleLogin = async (formData: LoginForm) => {
+    try{
+      const { data } = await api.post('/auth/login', formData);
 
+      localStorage.setItem('AUTH_TOKEN', data);
+      toast.success('Iniciando...');
+    } catch (error) {
+      if(isAxiosError(error) && error.response){
+        toast.error(error.response.data.msg);
+      }
+    }
   };
 
   return (
