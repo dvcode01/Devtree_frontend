@@ -15,8 +15,8 @@ function Register() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm({defaultValues: initialValues});
   const password = watch('password');
 
-  const handleRegister = (data: RegisterForm) => {
-    console.log(data);
+  const handleRegister = (formData: RegisterForm) => {
+    console.log(formData);
   };
 
   return (
