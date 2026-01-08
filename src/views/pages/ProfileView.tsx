@@ -33,7 +33,12 @@ function ProfileView() {
       console.error(error);
     },
     onSuccess: (data) => {
-      console.log(data);
+      queryClient.setQueryData(['user'], (prevData: User) => {
+        return {
+          ...prevData,
+          image: data.image
+        }
+      })
     }
   });
 
