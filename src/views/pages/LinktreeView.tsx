@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import DevtreeInput from '../../components/DevtreeInput'
 import { social } from '../../data/social'
-import type { DevTreeLink } from '../../types';
+import type { DevTreeLink } from '../../types'
 
 function LinktreeView() {
   const [devTreeLinks, setDevTreeLinks] = useState<DevTreeLink[]>(social);
