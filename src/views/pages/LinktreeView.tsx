@@ -1,4 +1,4 @@
-
+import type { social } from '../../data/social'
 
 function LinktreeView() {
   return (
