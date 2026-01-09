@@ -3,10 +3,11 @@ import type { DevTreeLink } from "../types"
 import { classNames } from '../utils'
 
 type DevtreeInputProps = {
-    item: DevTreeLink
+    item: DevTreeLink,
+    handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-function DevtreeInput({item}: DevtreeInputProps) {
+function DevtreeInput({item, handleChangeInput}: DevtreeInputProps) {
   return (
     <div className="bg-white shadow-sm p-5 flex items-center gap-3">
         <div 
@@ -17,6 +18,8 @@ function DevtreeInput({item}: DevtreeInputProps) {
 
         <input 
           type="text"
+          name={item.name}
+          onChange={handleChangeInput}
           className="flex-1 border border-gray-200 rounded-lg py-2 px-3"  
         />
 
