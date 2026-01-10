@@ -21,6 +21,11 @@ function LinktreeView() {
           handleChangeInput={handleChangeInput}
         />
       ))}
+
+      <button 
+        className="bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded font-bold">
+          Guardar Cambios
+      </button>
     </div>
   )
 }
