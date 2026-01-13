@@ -1,13 +1,17 @@
+import { useState } from "react"
 import { Link, Outlet } from "react-router-dom"
 import { Toaster } from "sonner"
 import NavigationTabs from '../components/NavigationTabs'
-import type { User } from "../types"
+import type { User, SocialNetwork } from "../types"
+import DevtreeLink from "./DevtreeLink"
 
 type DevtreeProps = {
     data: User
 }
 
 function Devtree({data}: DevtreeProps) {
+  const [enabledLinks, setEnabledLinks] = useState<SocialNetwork[]>(JSON.parse(data.links).filter((link: SocialNetwork) => link.enabled));
+
   return (
     <>
         <header className="bg-slate-800 py-5">
@@ -50,6 +54,12 @@ function Devtree({data}: DevtreeProps) {
                         }
 
                         <p className="text-lg text-center font-black text-white">{data.description}</p>
+                    
+                        <div className="mt-20 flex flex-col gap-5">
+                            {enabledLinks.map(link => (
+                               <DevtreeLink key={link.name} link={link} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </main>
