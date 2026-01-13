@@ -20,6 +20,7 @@ function DevtreeInput({item, handleChangeInput, handleEnableLink}: DevtreeInputP
         <input 
           type="text"
           name={item.name}
+          value={item.url}
           onChange={handleChangeInput}
           className="flex-1 border border-gray-200 rounded-lg py-2 px-3"  
         />

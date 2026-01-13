@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import DevtreeInput from '../../components/DevtreeInput'
 import { social } from '../../data/social'
-import type { DevTreeLink, User} from '../../types'
+import type { DevTreeLink, SocialNetwork, User} from '../../types'
 import { isValidUrl } from '../../utils';
 import { toast } from 'sonner';
 import { updateProfile } from '../../api/DevtreeApi';
@@ -22,9 +22,30 @@ function LinktreeView() {
     }
   });
 
+  useEffect(() => {
+    const updatedData = devTreeLinks.map(item => {
+      const userLinks = JSON.parse(user.links).find((link: SocialNetwork) => item.name === link.name);
+
+      if(userLinks){
+        return { ...item, url: userLinks.url, enabled: userLinks.enabled };
+      }
+
+      return item;
+    });
+
+    setDevTreeLinks(updatedData);
+  }, []);
+
   const handleChangeInput = (e:  React.ChangeEvent<HTMLInputElement>) => {
     const updatedLinks = devTreeLinks.map(link => e.target.name === link.name ? {...link, url: e.target.value}  : link);
     setDevTreeLinks(updatedLinks);
+
+    queryClient.setQueryData(['user'], (prevData: User) => {
+      return {
+        ...prevData,
+        links: JSON.stringify(updatedLinks)
+      }
+    });
   };
 
   const handleEnableLink = (socialNetwork: string) => {
@@ -48,7 +69,7 @@ function LinktreeView() {
         ...prevData,
         links: JSON.stringify(updatedEnable)
       }
-    })
+    });
   };
 
   return (
