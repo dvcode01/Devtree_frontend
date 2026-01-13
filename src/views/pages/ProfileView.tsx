@@ -24,6 +24,9 @@ function ProfileView() {
       queryClient.invalidateQueries({
         queryKey: ['user']
       })
+    },
+    onMutate: async () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
     }
   });
 
