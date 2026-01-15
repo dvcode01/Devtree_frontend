@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, Outlet } from "react-router-dom"
 import { Toaster } from "sonner"
 import NavigationTabs from '../components/NavigationTabs'
@@ -10,7 +10,12 @@ type DevtreeProps = {
 }
 
 function Devtree({data}: DevtreeProps) {
-  const [enabledLinks, setEnabledLinks] = useState<SocialNetwork[]>(JSON.parse(data.links).filter((link: SocialNetwork) => link.enabled));
+  const checkLinksEnabled: SocialNetwork[] = JSON.parse(data.links).filter((link: SocialNetwork) => link.enabled);
+  const [enabledLinks, setEnabledLinks] = useState<SocialNetwork[]>(checkLinksEnabled);
+  
+  useEffect(() => {
+    setEnabledLinks(checkLinksEnabled);
+  }, [data]);
 
   return (
     <>
