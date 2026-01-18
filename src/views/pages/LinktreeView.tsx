@@ -39,13 +39,6 @@ function LinktreeView() {
   const handleChangeInput = (e:  React.ChangeEvent<HTMLInputElement>) => {
     const updatedLinks = devTreeLinks.map(link => e.target.name === link.name ? {...link, url: e.target.value}  : link);
     setDevTreeLinks(updatedLinks);
-
-    /*queryClient.setQueryData(['user'], (prevData: User) => {
-      return {
-        ...prevData,
-        links: JSON.stringify(updatedLinks)
-      }
-    });*/
   };
 
   const links: SocialNetwork[] = JSON.parse(user.links);
@@ -69,12 +62,29 @@ function LinktreeView() {
     const selectedSocialNetwork = updatedEnable.find(link => link.name === socialNetwork);
     
     if(selectedSocialNetwork?.enabled){
-      const newItem = {
-        ...selectedSocialNetwork,
-        id: links.length + 1
-      };
+      const id = links.filter(link => link.id).length + 1;
 
-      updatedItems = [...links, newItem];
+      if(links.some(link => link.name === socialNetwork)){
+        updatedItems = links.map(link => {
+          if(link.name === socialNetwork){
+            return {
+              ...link,
+              enabled: true,
+              id
+            };
+          }
+
+          return link
+        });
+        
+      }else{
+        const newItem = {
+          ...selectedSocialNetwork,
+          id
+        };
+  
+        updatedItems = [...links, newItem];
+      }
     }else{
       // evitar ids duplicados
       const indexToUpdate = links.findIndex(link => link.name === socialNetwork);
@@ -98,8 +108,6 @@ function LinktreeView() {
         return link;
       });
     }
-
-    console.log(updatedItems);
 
     // almacena en DB
     queryClient.setQueryData(['user'], (prevData: User) => {
