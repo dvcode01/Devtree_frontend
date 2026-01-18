@@ -76,10 +76,30 @@ function LinktreeView() {
 
       updatedItems = [...links, newItem];
     }else{
-      console.log('Desabilitando');
+      // evitar ids duplicados
+      const indexToUpdate = links.findIndex(link => link.name === socialNetwork);
+
+      updatedItems = links.map(link => {
+        if(link.name === socialNetwork){
+          return {
+            ...link,
+            id: 0,
+            enabled: false
+          }
+        }
+
+        if(link.id > indexToUpdate){
+          return {
+            ...link,
+            id: link.id - 1
+          }
+        }
+
+        return link;
+      });
     }
 
-    
+    console.log(updatedItems);
 
     // almacena en DB
     queryClient.setQueryData(['user'], (prevData: User) => {
