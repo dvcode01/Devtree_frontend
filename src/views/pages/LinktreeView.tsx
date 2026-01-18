@@ -40,13 +40,15 @@ function LinktreeView() {
     const updatedLinks = devTreeLinks.map(link => e.target.name === link.name ? {...link, url: e.target.value}  : link);
     setDevTreeLinks(updatedLinks);
 
-    queryClient.setQueryData(['user'], (prevData: User) => {
+    /*queryClient.setQueryData(['user'], (prevData: User) => {
       return {
         ...prevData,
         links: JSON.stringify(updatedLinks)
       }
-    });
+    });*/
   };
+
+  const links: SocialNetwork[] = JSON.parse(user.links);
 
   const handleEnableLink = (socialNetwork: string) => {
     const updatedEnable = devTreeLinks.map(link => {
@@ -63,11 +65,27 @@ function LinktreeView() {
 
     setDevTreeLinks(updatedEnable);
 
-    // agrega links al user
+    let updatedItems: SocialNetwork[] = [];
+    const selectedSocialNetwork = updatedEnable.find(link => link.name === socialNetwork);
+    
+    if(selectedSocialNetwork?.enabled){
+      const newItem = {
+        ...selectedSocialNetwork,
+        id: links.length + 1
+      };
+
+      updatedItems = [...links, newItem];
+    }else{
+      console.log('Desabilitando');
+    }
+
+    
+
+    // almacena en DB
     queryClient.setQueryData(['user'], (prevData: User) => {
       return {
         ...prevData,
-        links: JSON.stringify(updatedEnable)
+        links: JSON.stringify(updatedItems)
       }
     });
   };
