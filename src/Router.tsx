@@ -5,6 +5,7 @@ import AuthLayout from "./layouts/AuthLayout"
 import AppLayout from "./layouts/AppLayout"
 import LinktreeView from "./views/pages/LinktreeView"
 import ProfileView from "./views/pages/ProfileView"
+import HandleView from "./views/pages/HandleView"
 
 function Router() {
   return (
@@ -17,6 +18,10 @@ function Router() {
         <Route path="/admin" element={<AppLayout />}>
           <Route index={true} element={<LinktreeView />} />
           <Route path="profile" element={<ProfileView />} />
+        </Route>
+
+        <Route path="/:handle" element={<AuthLayout />} >
+          <Route index={true} element={<HandleView />} />
         </Route>
       </Routes>
     </BrowserRouter>
