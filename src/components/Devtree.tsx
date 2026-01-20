@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { Link, Outlet } from "react-router-dom"
 import { Toaster } from "sonner"
+import { DndContext, closestCenter } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
+
 import NavigationTabs from '../components/NavigationTabs'
 import type { User, SocialNetwork } from "../types"
 import DevtreeLink from "./DevtreeLink"
@@ -16,6 +19,10 @@ function Devtree({data}: DevtreeProps) {
   useEffect(() => {
     setEnabledLinks(checkLinksEnabled);
   }, [data]);
+
+  const handleDragEnd = () => {
+
+  };
 
   return (
     <>
@@ -59,16 +66,27 @@ function Devtree({data}: DevtreeProps) {
                         }
 
                         <p className="text-lg text-center font-black text-white">{data.description}</p>
-                    
-                        <div className="mt-20 flex flex-col gap-5">
-                            {enabledLinks.map(link => (
-                               <DevtreeLink key={link.name} link={link} />
-                            ))}
-                        </div>
+                        
+                        <DndContext
+                            collisionDetection={closestCenter}
+                            onDragEnd={handleDragEnd}
+                        >
+                            <div className="mt-20 flex flex-col gap-5">
+                                <SortableContext
+                                    items={enabledLinks}
+                                    strategy={verticalListSortingStrategy}
+                                >
+                                    {enabledLinks.map(link => (
+                                        <DevtreeLink key={link.name} link={link} />
+                                    ))}
+                                </SortableContext>
+                            </div>
+                        </DndContext>
                     </div>
                 </div>
             </main>
         </div>
+
         <Toaster position="top-right" />
     </>
   )
