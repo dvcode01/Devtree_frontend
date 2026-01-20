@@ -7,6 +7,7 @@ import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-ki
 import NavigationTabs from '../components/NavigationTabs'
 import type { User, SocialNetwork } from "../types"
 import DevtreeLink from "./DevtreeLink"
+import { useQueryClient } from "@tanstack/react-query"
 
 type DevtreeProps = {
     data: User
@@ -20,15 +21,27 @@ function Devtree({data}: DevtreeProps) {
     setEnabledLinks(checkLinksEnabled);
   }, [data]);
 
+  const queryClient = useQueryClient();
+
   const handleDragEnd = (e: DragEndEvent) => {
       const { active, over } = e;
       
       if(over && over.id){
-          const prevIndex = enabledLinks.findIndex(link => link.id === active.id);
-          const newIndex = enabledLinks.findIndex(link => link.id === over.id);
-          const order = arrayMove(enabledLinks, prevIndex, newIndex);
-          
-          setEnabledLinks(order);
+        const prevIndex = enabledLinks.findIndex(link => link.id === active.id);
+        const newIndex = enabledLinks.findIndex(link => link.id === over.id);
+        const order = arrayMove(enabledLinks, prevIndex, newIndex);
+        
+        setEnabledLinks(order);
+
+        const disabledLinks: SocialNetwork[] = JSON.parse(data.links).filter((link: SocialNetwork) => !link.enabled);
+        const links = order.concat(disabledLinks);
+
+        queryClient.setQueryData(['user'], (prevData: User) => {
+            return{
+                ...prevData,
+                links: JSON.stringify(links)
+            }
+        });
     }
   };
 
