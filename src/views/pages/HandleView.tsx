@@ -15,7 +15,7 @@ function HandleView() {
   if(isLoading) return <p className="text-center text-white text-xl">Cargando...</p>;
   if(error) return <Navigate to={'/404'} />
   
-  return (
+  if(data) return (
     <div>HandleView</div>
   )
 }
