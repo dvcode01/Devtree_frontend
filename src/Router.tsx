@@ -7,15 +7,19 @@ import LinktreeView from "./views/pages/LinktreeView"
 import ProfileView from "./views/pages/ProfileView"
 import HandleView from "./views/pages/HandleView"
 import NotFoundView from "./views/pages/NotFoundView"
+import HomeView from "./views/pages/HomeView"
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<HomeView /> } />
+        
         <Route element={<AuthLayout />} >
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
         </Route>
+        
         <Route path="/admin" element={<AppLayout />}>
           <Route index={true} element={<LinktreeView />} />
           <Route path="profile" element={<ProfileView />} />
@@ -24,6 +28,7 @@ function Router() {
         <Route path="/:handle" element={<AuthLayout />} >
           <Route index={true} element={<HandleView />} />
         </Route>
+
 
         <Route path="/404" element={<AuthLayout />} >
           <Route index={true} element={<NotFoundView />} />
