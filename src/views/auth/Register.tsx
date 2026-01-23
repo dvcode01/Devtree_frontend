@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { toast } from "sonner"
 import { isAxiosError } from "axios"
 import type { RegisterForm } from '../../types/index'
@@ -7,10 +7,12 @@ import ErrorMessage from "../../components/ErrorMessage"
 import api from "../../config/api"
 
 function Register() {
+  const location = useLocation();
+
   const initialValues: RegisterForm = {
     nombre: '',
     email: '',
-    handle: '',
+    handle: location.state.handle || '',
     password: '',
     password_confirmation: ''
   };

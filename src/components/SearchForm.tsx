@@ -52,7 +52,7 @@ function SearchForm() {
             {mutation.isPending && <p className="text-center">Cargando...</p>}
             {mutation.isError && <p className="text-center text-red-600 font-black">{mutation.error.message}</p>}
             {mutation.isSuccess && <p className="text-center text-green-600 font-black">
-                {mutation.data} ir a <Link to={'/auth/register'}>Registro</Link>
+                {mutation.data} ir a <Link to={'/auth/register'} state={{handle: slugify(handle)}}>Registro</Link>
             </p>}
         </div>
 
