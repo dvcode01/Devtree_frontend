@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { isAxiosError } from "axios"
@@ -7,6 +7,7 @@ import ErrorMessage from "../../components/ErrorMessage"
 import type { LoginForm } from "../../types"
 
 function Login() {
+  const navigate = useNavigate();
   const initialValues: LoginForm = {
       email: '',
       password: '',
@@ -20,6 +21,8 @@ function Login() {
 
       localStorage.setItem('AUTH_TOKEN', data);
       toast.success('Iniciando...');
+      
+      navigate('/admin');
     } catch (error) {
       if(isAxiosError(error) && error.response){
         toast.error(error.response.data.msg);
