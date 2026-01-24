@@ -1,11 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom';
 
 function AdminNavigation() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   
   const logout = () => {
     localStorage.removeItem('AUTH_TOKEN');
-    queryClient.invalidateQueries({ queryKey: ['user'] });
+    
+    queryClient.clear();
+    navigate('/');
   };
 
   return (
