@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+# Proyecto Devtree
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Imagen del proyecto](./public/assets/Devtree.png)
 
-Currently, two official plugins are available:
+## Indice
+- [Descripción](#descripción-del-proyecto)
+- [Funcionalidades](#funcionalidades-del-proyecto)
+- [Tecnologías](#tecnologías-utilizadas)
+- [Acceso al proyecto](#acceso-al-proyecto)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Descripción del proyecto
+Devtree es una aplicación web frontend que permite crear una página personal de enlaces estilo "Linktree" completamente personalizable. Los usuarios pueden organizar y compartir sus enlaces importantes en un solo lugar con una interfaz moderna y adaptable.
 
-## React Compiler
+## Funcionalidades del proyecto
+- Avatar de usuario y configuración de nombre
+- Descripción personalizable para tu biografía
+- Arrastrar y soltar para reorganizar enlaces
+- Formulario optimizado para añadir nuevos enlaces
+- Validación en tiempo real de URLs
+- Categorización flexible de contenido
+- URLs amigables (slugs) generadas automáticamente
+- Sistema de autenticación completo
+- Persistencia de preferencias en localStorage
+- Actualizaciones en tiempo real sin recargar página
+- Diseño completamente responsive (móvil, tablet, escritorio)
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Tecnologías Utilizadas
+- React 
+- Typescript
+- Vite
+- Axios
+- Tailwind CSS
+- Tanstack Query
+- Sonner (para notificaciones)
+- React Router DOM (para navegación cliente-side)
+- React Hook Form
+- React Slugify (para URLs amigables)
+- Headless UI (para componentes accesibles)
 
-## Expanding the ESLint configuration
+## Acceso al proyecto
+- Demo en Vivo: https://devtreee.netlify.app/
+- Repositorio del Backend: https://github.com/dvcode01/Devtree_backend
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Para poder hacer uso del proyecto de forma local, sigue las siguientes instrucciones:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Clonar repositorio
+git clone https://github.com/dvcode01/Devtree_frontend.git
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Instalar dependencias
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Iniciar entorno de desarrollo
+npm run dev
 ```
